@@ -3,6 +3,7 @@ import express from 'express';
 import Youch from 'youch';
 import 'express-async-errors';
 import routes from './app/routes';
+import './database';
 
 class App {
   constructor() {
@@ -13,7 +14,9 @@ class App {
     this.exceptionHandler();
   }
 
-  middlewares() {}
+  middlewares() {
+    this.server.use(express.json());
+  }
 
   routes() {
     this.server.use(routes);
