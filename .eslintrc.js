@@ -13,6 +13,8 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
+    'import/no-named-as-default': 0,
+    'import/no-named-as-default-member': 'off',
     'no-param-reasign': 'off',
     camelcase: 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
