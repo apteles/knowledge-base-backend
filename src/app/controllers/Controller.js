@@ -7,17 +7,26 @@ export default class ResourceController {
     throw Error('runValidator must be implemented');
   }
 
+  transform(obj) {
+    return obj;
+  }
+
+  transformAll(obj, options = {}) {
+    return obj;
+  }
+
   index = async (req, res) => {
-    const model = await this.model.findAll();
-    res.json(model);
+    const model = await this.model.findAll({ raw: true });
+
+    res.json(this.transformAll(model, { query: req.query }));
   };
 
   find = async (req, res) => {
-    const model = await this.model.findByPk(req.params.id);
+    const model = await this.model.findByPk(req.params.id, { raw: true });
     if (!model) {
       return res.status(400).json({});
     }
-    return res.json(model);
+    return res.json(this.transform(model));
   };
 
   update = async (req, res) => {
@@ -41,10 +50,10 @@ export default class ResourceController {
 
     model = await this.model.findByPk(req.params.id);
 
-    return res.json(model);
+    return res.json(this.transform(model));
   };
 
-  async create(req, res) {
+  create = async (req, res) => {
     const { validator, EntityValidation } = this.runValidator();
 
     if (validator) {
@@ -55,6 +64,6 @@ export default class ResourceController {
       }
     }
     const model = await this.model.create(req.body);
-    return res.json(model);
-  }
+    return res.json(this.transform(model));
+  };
 }
