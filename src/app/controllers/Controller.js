@@ -12,13 +12,33 @@ export default class ResourceController {
   }
 
   transformAll(obj, options = {}) {
-    return obj;
+    let resource = {
+      data: [...obj.docs],
+      _links: {
+        self: `${options.baseUrl}/${options.path}`,
+        current: options.current,
+        pages: obj.pages,
+        total: obj.total,
+      },
+    };
+    return resource;
   }
 
   index = async (req, res) => {
-    const model = await this.model.findAll({ raw: true });
+    const model = await this.model.paginate({
+      raw: true,
+      page: req.query.page,
+      paginate: 6,
+    });
 
-    res.json(this.transformAll(model, { query: req.query }));
+    res.json(
+      this.transformAll(model, {
+        query: req.query,
+        path: req.url,
+        baseUrl: `${req.protocol}://${req.headers.host}`,
+        current: parseInt(req.query.page) || 1,
+      })
+    );
   };
 
   find = async (req, res) => {

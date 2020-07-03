@@ -1,4 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
+import paginator from 'sequelize-paginate';
 
 export default class Category extends Model {
   static init(conn) {
@@ -9,7 +10,7 @@ export default class Category extends Model {
       },
       { sequelize: conn }
     );
-
+    paginator.paginate(this);
     return this;
   }
 }

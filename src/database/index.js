@@ -1,13 +1,16 @@
 import Sequelize from 'sequelize';
+import mongoose from 'mongoose';
 import config from '../config/database';
 import User from '../app/models/User';
 import Category from '../app/models/Category';
+import Article from '../app/models/Article';
 
-const models = [User, Category];
+const models = [User, Category, Article];
 
 class Database {
   constructor() {
     this.init();
+    this.mongo();
   }
 
   init() {
@@ -16,8 +19,19 @@ class Database {
     models
       .map((model) => model.init(this.connection))
       .map(
-        (model) => model.associate && model.associate(this.connection.model)
+        (model) => model.associate && model.associate(this.connection.models)
       );
+  }
+
+  mongo() {
+    this.mongoConnection = mongoose.connect(process.env.MONGO_DSN, {
+      useNewUrlParser: true,
+      useFindAndModify: true,
+    });
+  }
+
+  get conn() {
+    return this.connection;
   }
 }
 

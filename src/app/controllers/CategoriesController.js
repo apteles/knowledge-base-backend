@@ -16,9 +16,21 @@ class CategoriesController extends ResourceController {
     };
   }
 
-  transformAll(response, { query }) {
-    if (query.tree) return toTree(generatePath(response));
-    return generatePath(response);
+  transformAll(response, options) {
+    const resource = super.transformAll(response, options);
+
+    if (options.query.tree) {
+      return {
+        data: [...toTree(generatePath(resource.data))],
+        // eslint-disable-next-line no-underscore-dangle
+        _links: { ...resource._links },
+      };
+    }
+    return {
+      data: [...generatePath(resource.data)],
+      // eslint-disable-next-line no-underscore-dangle
+      _links: { ...resource._links },
+    };
   }
 }
 

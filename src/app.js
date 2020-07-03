@@ -4,7 +4,9 @@ import Youch from 'youch';
 import 'express-async-errors';
 import routes from './app/routes';
 import './database';
+import statistics from './app/schedules/statistics';
 
+statistics();
 class App {
   constructor() {
     this.server = express();

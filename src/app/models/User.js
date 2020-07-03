@@ -1,4 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
+import paginator from 'sequelize-paginate';
 import bcrypt from 'bcrypt';
 
 export default class User extends Model {
@@ -20,6 +21,7 @@ export default class User extends Model {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
     });
+    paginator.paginate(this);
     return this;
   }
 
