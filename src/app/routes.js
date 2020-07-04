@@ -12,7 +12,42 @@ import isAdmin from './middlewares/isAdmin';
 
 const routes = new Router();
 
+/**
+ * @swagger
+ * /users:
+ *  post:
+ *    tags:
+ *      - users
+ *    description: Create a new user.
+ *    responses:
+ *       '204':
+ *          description: Successful Operation
+ *
+ */
 routes.post('/users', UsersController.create);
+
+/**
+ * @swagger
+ * /session:
+ *  post:
+ *    tags:
+ *      - session
+ *    description: Generate a token valid to get access.
+ *    responses:
+ *       '200':
+ *          description: Successful Operation
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/SessionResponse'
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Session'
+ *      description:
+ *      required: true
+ */
 routes.post('/session', SessionController.create);
 
 routes.use(
@@ -53,6 +88,20 @@ routes.get('/users', UsersController.index);
  *
  */
 routes.get('/users/:id', UsersController.find);
+/**
+ * @swagger
+ * /users/:id:
+ *  put:
+ *    tags:
+ *      - users
+ *    description: Update a user
+ *    responses:
+ *       '204':
+ *          description: Successful Operation
+ *    security:
+ *        - bearerAuth: []
+ *
+ */
 routes.put('/users/:id', isAdmin(UsersController.update));
 
 routes.get('/categories', CategoriesController.index);
