@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
 import Youch from 'youch';
+
 import 'express-async-errors';
 import routes from './app/routes';
 import './database';
+
 import statistics from './app/schedules/statistics';
 
 statistics();

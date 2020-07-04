@@ -1,5 +1,7 @@
 import { Router } from 'express';
-
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
+import swaggerOptions from '../config/swagger';
 import UsersController from './controllers/UsersController';
 import SessionController from './controllers/SessionController';
 import CategoriesController from './controllers/CategoriesController';
@@ -13,9 +15,43 @@ const routes = new Router();
 routes.post('/users', UsersController.create);
 routes.post('/session', SessionController.create);
 
+routes.use(
+  '/docs',
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerJsDoc(swaggerOptions))
+);
+
 routes.use(auth);
 
+/**
+ * @swagger
+ * /users:
+ *  get:
+ *    tags:
+ *      - users
+ *    description: Get all users
+ *    responses:
+ *       '200':
+ *          description: Successful Operation
+ *    security:
+ *        - bearerAuth: []
+ *
+ */
 routes.get('/users', UsersController.index);
+/**
+ * @swagger
+ * /users/:id:
+ *  get:
+ *    tags:
+ *      - users
+ *    description: Get a single user
+ *    responses:
+ *       '200':
+ *          description: Successful Operation
+ *    security:
+ *        - bearerAuth: []
+ *
+ */
 routes.get('/users/:id', UsersController.find);
 routes.put('/users/:id', isAdmin(UsersController.update));
 
