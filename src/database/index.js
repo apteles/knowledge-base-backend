@@ -23,11 +23,13 @@ class Database {
       );
   }
 
-  mongo() {
-    this.mongoConnection = mongoose.connect(process.env.MONGO_DSN, {
-      useNewUrlParser: true,
-      useFindAndModify: true,
-    });
+  async mongo() {
+    try {
+      this.mongoConnection = await mongoose.connect(process.env.MONGO_DSN, {
+        useNewUrlParser: true,
+        useFindAndModify: true,
+      });
+    } catch (error) {}
   }
 
   get conn() {
