@@ -1,25 +1,39 @@
-version: '3'
+version: '2.4'
+volumes:
+  pgdataknowledge:
+  mongodata:
 services:
+  app:
+    build:
+      context: .
+    depends_on:
+      database:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
   database:
-    image: postgres
-    container_name: database
-    restart: always
+    image: postgres:12.3
+    restart: on-failure
+    healthcheck:
+      test: pg_isready -h 127.0.0.1
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: ${DB_USER}
     ports:
       - '5432:5432'
     volumes:
       - pgdataknowledge:/var/lib/postgresql/data
   mongo:
     image: mongo
+    healthcheck:
+      test: echo 'db.runCommand('ping').ok' | mongo localhost:27017/test --quite
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - '27017:27017'
-    restart: always
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: docker
-    #   MONGO_INITDB_ROOT_PASSWORD: secret
+    restart: on-failure
     volumes:
       - mongodata:/data/db
-volumes:
-  pgdataknowledge:
-  mongodata:

@@ -9,6 +9,9 @@ import auth from './middlewares/auth';
 import isAdmin from './middlewares/isAdmin';
 
 const routes = new Router();
+routes.get('/check', function (req, res) {
+  return res.json({ message: "Hi I'm alive" });
+});
 
 routes.post('/users', UsersController.create);
 routes.post('/session', SessionController.create);
