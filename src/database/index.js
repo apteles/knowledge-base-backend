@@ -28,6 +28,7 @@ class Database {
       this.mongoConnection = await mongoose.connect(process.env.MONGO_DSN, {
         useNewUrlParser: true,
         useFindAndModify: true,
+        useUnifiedTopology: true,
       });
     } catch (error) {}
   }

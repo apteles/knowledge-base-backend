@@ -3,10 +3,9 @@ import express from 'express';
 import Youch from 'youch';
 import 'express-async-errors';
 import routes from './app/routes';
-import './database';
+import db from './database';
 import statistics from './app/schedules/statistics';
 
-statistics();
 class App {
   constructor() {
     this.server = express();
@@ -14,6 +13,10 @@ class App {
     this.middlewares();
     this.routes();
     this.exceptionHandler();
+  }
+
+  async bootstrap() {
+    await statistics();
   }
 
   middlewares() {
@@ -33,6 +36,10 @@ class App {
       return res.status(500).json({ error: 'Server Internal error' });
     });
   }
+  async shutdown() {
+    await db.conn.close();
+    await db.mongoConnection.disconnect();
+  }
 }
 
-export default new App().server;
+export default new App();

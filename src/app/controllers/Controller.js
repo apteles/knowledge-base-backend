@@ -75,7 +75,6 @@ export default class ResourceController {
 
   create = async (req, res) => {
     const { validator, EntityValidation } = this.runValidator();
-
     if (validator) {
       await validator.validate(req.body, EntityValidation.rules());
 

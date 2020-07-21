@@ -4,13 +4,12 @@ import app from '../src/app';
 import truncate from './utils/truncate';
 import factory from './utils/factories';
 
-beforeAll(() => {});
+const server = app.server;
 
 describe('Users', () => {
   beforeEach(async () => {
     await truncate();
   });
-
   it('should return a new user with password encrypted', async () => {
     const user = await factory.create('User', {
       password: '123456',
@@ -21,7 +20,7 @@ describe('Users', () => {
 
   it('should be able register a new user', async () => {
     const user = await factory.attrs('User');
-    const response = await request(app).post('/users').send(user);
+    const response = await request(server).post('/users').send(user);
 
     expect(response.body).toHaveProperty('id');
     expect(response.body).toHaveProperty('name');
@@ -39,8 +38,8 @@ describe('Users', () => {
 
   it('should return error if user already exists and status 400', async () => {
     const user = await factory.attrs('User');
-    await request(app).post('/users').send(user);
-    const response = await request(app).post('/users').send(user);
+    await request(server).post('/users').send(user);
+    const response = await request(server).post('/users').send(user);
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('errors');
@@ -49,7 +48,7 @@ describe('Users', () => {
   });
 
   it('should response with errors if body sent empty and status 400', async () => {
-    const response = await request(app).post('/users').send({});
+    const response = await request(server).post('/users').send({});
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('errors');
@@ -60,8 +59,12 @@ describe('Users', () => {
   });
 
   it('should return status 401', async () => {
-    const response = await request(app).get('/users');
+    const response = await request(server).get('/users');
     expect(response.status).toBe(401);
     expect(response.body.error).toBe('Token not provided');
+  });
+
+  afterAll(() => {
+    app.shutdown();
   });
 });
