@@ -19,6 +19,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
+      NODE_ENV: ${NODE_ENV}
     ports:
       - '3333:3333'
     volumes:
