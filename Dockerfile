@@ -41,7 +41,8 @@ ADD https://get.aquasec.com/microscanner /
 USER root
 RUN chmod +x /microscanner
 RUN /microscanner $MICROSCANNER_TOKEN --continue-on-failure
-CMD ["yarn","test"]
+RUN yarn lint &&\
+  yarn test
 
 FROM test as pre-prod
 RUN rm -rf ./__tests__ && rm -rf ./node_modules
