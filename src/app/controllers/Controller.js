@@ -3,16 +3,16 @@ export default class ResourceController {
     this.model = model;
   }
 
-  runValidator() {
+  runValidator = () => {
     throw Error('runValidator must be implemented');
-  }
+  };
 
   transform(obj) {
     return obj;
   }
 
   transformAll(obj, options = {}) {
-    let resource = {
+    const resource = {
       data: [...obj.docs],
       _links: {
         self: `${options.baseUrl}/${options.path}`,
@@ -36,7 +36,7 @@ export default class ResourceController {
         query: req.query,
         path: req.url,
         baseUrl: `${req.protocol}://${req.headers.host}`,
-        current: parseInt(req.query.page) || 1,
+        current: parseInt(req.query.page, 10) || 1,
       })
     );
   };

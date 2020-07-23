@@ -8,12 +8,12 @@ class UsersController extends ResourceController {
     super(User);
   }
 
-  runValidator() {
+  runValidator = () => {
     return {
       validator,
       EntityValidation: UserValidation,
     };
-  }
+  };
 }
 
 export default new UsersController();

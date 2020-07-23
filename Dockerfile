@@ -32,15 +32,16 @@ RUN yarn install \
 USER node
 CMD ["yarn","dev"]
 
-FROM dev as testing
+FROM dev as test
 ENV NODE_ENV=test
-COPY . .
-RUN yarn test
+USER node
+COPY --chown=node:node . .
 ARG MICROSCANNER_TOKEN
 ADD https://get.aquasec.com/microscanner /
 USER root
 RUN chmod +x /microscanner
 RUN /microscanner $MICROSCANNER_TOKEN --continue-on-failure
+CMD ["yarn","test"]
 
 FROM test as pre-prod
 RUN rm -rf ./__tests__ && rm -rf ./node_modules

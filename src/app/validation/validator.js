@@ -7,7 +7,7 @@ class Validator {
     try {
       await rules.validate(data, { abortEarly: false });
     } catch (error) {
-      this.parseErrors(error.inner);
+      this.parseErrors([...error.inner, error.errors]);
     }
   }
 

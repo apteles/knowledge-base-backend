@@ -6,11 +6,23 @@ services:
   app:
     build:
       context: .
+      target: dev
     depends_on:
       database:
         condition: service_healthy
       mongo:
         condition: service_healthy
+    environment:
+      APP_URL: ${APP_URL}
+      APP_SECRET: ${APP_SECRET}
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - '3333:3333'
+    volumes:
+      - ./:/app
   database:
     image: postgres:12.3
     restart: on-failure
@@ -20,7 +32,7 @@ services:
       timeout: 5s
       retries: 5
     environment:
-      POSTGRES_PASSWORD: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
     ports:
       - '5432:5432'
     volumes:
@@ -28,7 +40,7 @@ services:
   mongo:
     image: mongo
     healthcheck:
-      test: echo 'db.runCommand('ping').ok' | mongo localhost:27017/test --quite
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
       interval: 10s
       timeout: 5s
       retries: 5

@@ -24,12 +24,19 @@ class Database {
   }
 
   async mongo() {
+    if (process.env.NODE_ENV === 'test') {
+      return true;
+    }
     try {
       this.mongoConnection = await mongoose.connect(process.env.MONGO_DSN, {
         useNewUrlParser: true,
         useFindAndModify: true,
+        useUnifiedTopology: true,
       });
-    } catch (error) {}
+    } catch (error) {
+      /* eslint-disable no-debugger, no-console */
+      console.error(error);
+    }
   }
 
   get conn() {

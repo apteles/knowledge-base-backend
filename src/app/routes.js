@@ -9,7 +9,7 @@ import auth from './middlewares/auth';
 import isAdmin from './middlewares/isAdmin';
 
 const routes = new Router();
-routes.get('/check', function (req, res) {
+routes.get('/check', (req, res) => {
   return res.json({ message: "Hi I'm alive" });
 });
 

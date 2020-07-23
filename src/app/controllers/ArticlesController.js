@@ -25,7 +25,7 @@ class ArticlesController extends ResourceController {
   /**
    * TODO: Refactor
    */
-  relations = async (req, res) => {
+  async relations(req, res) {
     if (!req.query.category) {
       return res.status(400).json({
         message: 'Route require query string categoy',
@@ -55,15 +55,15 @@ class ArticlesController extends ResourceController {
       paginate: 6,
     });
 
-    res.json(
+    return res.json(
       this.transformAll(result, {
         query: req.query,
         path: req.url,
         baseUrl: `${req.protocol}://${req.headers.host}`,
-        current: parseInt(req.query.page) || 1,
+        current: parseInt(req.query.page, 10) || 1,
       })
     );
-  };
+  }
 }
 
 export default new ArticlesController();
