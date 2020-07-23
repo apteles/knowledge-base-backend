@@ -6,6 +6,7 @@ module.exports = {
   },
   extends: ['airbnb-base', 'prettier'],
   plugins: ['prettier'],
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 11,
     sourceType: 'module',
@@ -16,6 +17,7 @@ module.exports = {
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 'off',
     'no-param-reasign': 'off',
+    'consistent-return': 'off',
     camelcase: 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
   },
