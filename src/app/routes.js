@@ -25,6 +25,13 @@ routes.get('/check', (req, res) => {
  *    responses:
  *       '204':
  *          description: Successful Operation
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/User'
+ *      description:
+ *      required: true
  *
  */
 routes.post('/users', UsersController.create);
