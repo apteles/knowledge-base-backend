@@ -2,7 +2,7 @@ import { object, string } from 'yup';
 import User from '../../models/User';
 
 class UserValidation {
-  static rules() {
+  static createRules() {
     return object().shape({
       name: string().required(),
       status: string().required(),
@@ -30,6 +30,15 @@ class UserValidation {
             }
           }
         ),
+    });
+  }
+
+  static UpdateRules() {
+    return object().shape({
+      name: string(),
+      status: string(),
+      password: string().min(6),
+      email: string().email(),
     });
   }
 }

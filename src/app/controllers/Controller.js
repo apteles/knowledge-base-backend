@@ -11,11 +11,11 @@ export default class ResourceController {
     return obj;
   }
 
-  transformAll(obj, options = {}) {
+  transformAll(obj, options) {
     const resource = {
       data: [...obj.docs],
       _links: {
-        self: `${options.baseUrl}/${options.path}`,
+        self: `${options.baseUrl}${options.path}`,
         current: options.current,
         pages: obj.pages,
         total: obj.total,
@@ -59,7 +59,7 @@ export default class ResourceController {
     const { validator, EntityValidation } = this.runValidator();
 
     if (validator) {
-      await validator.validate(req.body, EntityValidation.rules());
+      await validator.validate(req.body, EntityValidation.UpdateRules());
 
       if (validator.fails()) {
         return res.status(400).json({ errors: validator.getErrors() });
@@ -77,7 +77,7 @@ export default class ResourceController {
     const { validator, EntityValidation } = this.runValidator();
 
     if (validator) {
-      await validator.validate(req.body, EntityValidation.rules());
+      await validator.validate(req.body, EntityValidation.createRules());
 
       if (validator.fails()) {
         return res.status(400).json({ errors: validator.getErrors() });
