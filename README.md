@@ -138,7 +138,7 @@ Done in 9.76s.
 ## Ferramentas adicionais
 
 Além do `prettier`, `eslint` também foi configurado o `rusky` para melhorar no processo de desenvolvimento. Um exemplo configurado
-nesse projeto é quando um usuário implementa um feature no projeto e vai fazer o commit é executado o `yarn lint` e `yarn test`, ou seja,
+nesse projeto é quando um usuário implementa um feature no projeto e vai fazer o `commit` ou `push` é executado o `yarn lint` e `yarn test`, ou seja,
 se o desenvolvedor efetuar um commit e não passar os testes ou o padrão de código o mesmo não será feito fazendo com que o desenvolvedor volte
 e corrija.
 
