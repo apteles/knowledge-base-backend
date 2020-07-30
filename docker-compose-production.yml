@@ -1,21 +1,46 @@
 version: '3.8'
 networks:
   backend:
-    driver: overlay
+volumes:
+  postgres-data:
+  mongo-data:
 secrets:
-  secret_postgres:
-    external: true
+  postgres_user:
+    file: ./postgres_user.secret
+  postgres_pass:
+    file: ./postgres_pass.secret
+  api_key:
+    file: ./api_key.secret
 services:
+  api:
+    secrets:
+      - api_key
+    image: ateles/knowledge-prod:v1.0.0
+    deploy:
+      replicas: 2
+    environment:
+      APP_URL: http://api-knowledge.andretelestp.com:3333
+      NODE_ENV: production
+      APP_SECRET: /run/secrets/api_key
+      DB_HOST: database
+      DB_USER: /run/secrets/postgres_user
+      DB_PASS: secret
+      DB_NAME: /run/secrets/postgres_pass
+      MONGO_DSN: mongodb://mongo:27017/knowledge_statistics
+    ports:
+      - '3333:3333'
+    networks:
+      - backend
   database:
     image: postgres:12.3
+    secrets:
+      - postgres_user
+      - postgres_pass
     environment:
-      environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret_postgres
-    ports:
-      - '5432:5432'
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pass
     volumes:
-      - /var/lib/postgresql/data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - backend
     deploy:
@@ -29,3 +54,22 @@ services:
           memory: 128M
         limits:
           memory: 256M
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+    networks:
+      - backend
+  visualizer:
+    image: dockersamples/visualizer
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - '8080:8080'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
