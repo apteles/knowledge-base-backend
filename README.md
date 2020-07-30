@@ -153,7 +153,7 @@ $ NODE_ENV=test sequelize db:migrate
 ## Documentação da API
 
 Foi usado o swagger para prover uma documentação mais clara possível dos recursos disponíveis nesse projeto. Para acessar basta acessar o
-recurso `http://localhost:3333/docs`, após já ter executado o passo de **Executando o Projeto** mencionado nesse documento. Uma página semelhante a imagem abaixo será apresentada, veja:
+recurso `http://api-knowledge.andretelestp.com/docs`, após já ter executado o passo de **Executando o Projeto** mencionado nesse documento. Uma página semelhante a imagem abaixo será apresentada, veja:
 
 ![Documentação](./docs/doc-api.png)
 
