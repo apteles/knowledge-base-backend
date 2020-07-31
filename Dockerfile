@@ -45,7 +45,7 @@ RUN yarn lint &&\
   yarn test
 
 FROM test as pre-prod
-RUN rm -rf ./__tests__ && rm -rf ./node_modules
+RUN yarn build && rm -rf ./__tests__ && rm -rf ./node_modules
 
 FROM base as production
 COPY --from=pre-prod /app /app
