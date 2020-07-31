@@ -15,7 +15,7 @@ Knowledge Base API é um projeto prático desenvolvido no curso **Web Moderno Co
 - Autenticação via token JWT e autorização.
 - Paginação de dados
 
-Você também pode acessar a documentação dos recursos [Aqui]().
+Você também pode acessar a documentação dos recursos [Aqui](http://api-knowledge.andretelestp.com:3333/docs/).
 Essa aplicação implementa os principais conceitos da Arquitetura REST e seus 5 principais requisitos para que seja considerado uma API [Restful](https://restfulapi.net/).
 
 ### Tecnologias
@@ -153,7 +153,7 @@ $ NODE_ENV=test sequelize db:migrate
 ## Documentação da API
 
 Foi usado o swagger para prover uma documentação mais clara possível dos recursos disponíveis nesse projeto. Para acessar basta acessar o
-recurso `http://api-knowledge.andretelestp.com/docs`, após já ter executado o passo de **Executando o Projeto** mencionado nesse documento. Uma página semelhante a imagem abaixo será apresentada, veja:
+recurso `http://api-knowledge.andretelestp.com:3333/docs/`, após já ter executado o passo de **Executando o Projeto** mencionado nesse documento. Uma página semelhante a imagem abaixo será apresentada, veja:
 
 ![Documentação](./docs/doc-api.png)
 
