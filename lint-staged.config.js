@@ -1,10 +1,8 @@
 /* eslint-disable */
-const tasks = (arr) => arr.join(' && ');
-
 module.exports = {
-  './src/**/*.js': tasks([
+  '*.js': [
     'yarn lint',
-    'yarn test',
+    'yarn test --findRelatedTests',
     'git checkout -- __tests__/database.sqlite',
-  ]),
+  ],
 };
