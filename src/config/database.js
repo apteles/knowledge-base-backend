@@ -7,7 +7,7 @@ module.exports = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  storage: path.join(__dirname, '..', '..', '__tests_', 'database.sqlite'),
+  storage: path.join(__dirname, '..', '..', '__tests__', 'database.sqlite'),
   logging: false,
   define: {
     timestamps: true,
