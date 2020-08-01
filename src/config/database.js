@@ -2,6 +2,7 @@ const path = require('path');
 require('../bootstrap');
 /* eslint-disable no-console */
 console.log(process.env.DB_DIALECT);
+console.log(process.env.NODE_ENV);
 module.exports = {
   dialect: process.env.DB_DIALECT || 'postgres',
   host: process.env.DB_HOST,
