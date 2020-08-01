@@ -1,6 +1,7 @@
 const path = require('path');
 require('../bootstrap');
 
+console.log(process.env.DB_DIALECT);
 module.exports = {
   dialect: process.env.DB_DIALECT || 'postgres',
   host: process.env.DB_HOST,
