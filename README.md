@@ -1,4 +1,6 @@
-# Knowledge Base (BACKEND)
+# 📚 Knowledge Base (BACKEND)
+
+![ci](https://github.com/apteles/knowledge-base-backend/workflows/ci/badge.svg)
 
 Knowledge Base API é um projeto prático desenvolvido no curso **Web Moderno Com Javascript** da [Udemy](https://www.udemy.com/) no qual é abordado a criação de uma base de conhecimento. No backend foi usado um [Skeleton Express](https://github.com/apteles/skeleton-express) para saber mais sobre a estrutura veja o repositório.
 
