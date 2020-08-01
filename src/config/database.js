@@ -1,3 +1,4 @@
+const path = require('path');
 require('../bootstrap');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  storage: './__tests__/database.sqlite',
+  storage: path.join(__dirname, '..', '..', '__tests_', 'database.sqlite'),
   logging: false,
   define: {
     timestamps: true,
